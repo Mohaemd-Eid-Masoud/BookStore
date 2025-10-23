@@ -14,32 +14,36 @@
     </div>
 
     <div *ngIf="cartItems.length > 0" class="cart-content">
-      <ul class="cart-list">
-        <li *ngFor="let item of cartItems; let i = index" class="cart-item">
-          <div class="item-image">
-            <img src="/assets/book-placeholder.png" alt="{{ item.book.name }}" class="book-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <div class="book-fallback" style="display: none;">📖</div>
-          </div>
-          <div class="item-details">
-            <h3>{{ item.book.name }}</h3>
-            <p class="author">{{ item.book.author }}</p>
-            <p class="price">${{ item.book.value }}</p>
-          </div>
-          <div class="item-actions">
-            <div class="quantity-controls">
-              <button (click)="updateQuantity(i, item.quantity - 1)" [disabled]="item.quantity <= 1" class="qty-btn">-</button>
-              <span class="quantity">{{ item.quantity }}</span>
-              <button (click)="updateQuantity(i, item.quantity + 1)" class="qty-btn">+</button>
+      <div class="cart-items-section">
+        <ul class="cart-list">
+          <li *ngFor="let item of cartItems; let i = index" class="cart-item">
+            <div class="cart-item-mobile">
+              <div class="item-image">
+                <img src="/assets/book-placeholder.png" alt="{{ item.book.name }}" class="book-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="book-fallback" style="display: none;">📖</div>
+              </div>
+              <div class="item-details">
+                <h3>{{ item.book.name }}</h3>
+                <p class="author">{{ item.book.author }}</p>
+                <p class="price">${{ item.book.value }}</p>
+              </div>
+              <div class="item-actions">
+                <div class="quantity-controls">
+                  <button (click)="updateQuantity(i, item.quantity - 1)" [disabled]="item.quantity <= 1" class="qty-btn" aria-label="Decrease quantity">-</button>
+                  <span class="quantity">{{ item.quantity }}</span>
+                  <button (click)="updateQuantity(i, item.quantity + 1)" class="qty-btn" aria-label="Increase quantity">+</button>
+                </div>
+                <div class="item-buttons">
+                  <button (click)="removeFromCart(i)" class="remove-btn">Remove</button>
+                </div>
+              </div>
             </div>
-            <div class="item-buttons">
-              <button (click)="removeFromCart(i)" class="remove-btn">Remove</button>
+            <div class="item-total">
+              ${{ item.book.value * item.quantity }}
             </div>
-          </div>
-          <div class="item-total">
-            ${{ item.book.value * item.quantity }}
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
 
       <div class="cart-summary">
         <div class="summary-row">
@@ -56,6 +60,7 @@
         </div>
         <button (click)="buyCart()" class="checkout-btn">Proceed to Checkout</button>
       </div>
+    </div>
   </div>
 </div>
 
