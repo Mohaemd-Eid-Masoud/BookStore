@@ -76,16 +76,23 @@
   gap: 30px;
 }
 
-.cart-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.cart-items-section {
+  width: 100%;
+}
+
+.cart-item-mobile {
+  display: grid;
+  grid-template-columns: 80px 1fr 150px 100px;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
 }
 
 .cart-item {
   display: grid;
-  grid-template-columns: 80px 1fr 150px 100px;
-  align-items: center;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
   padding: 20px;
   margin-bottom: 15px;
   background: white;
@@ -102,7 +109,7 @@
 .item-image {
   width: 60px;
   height: 80px;
-  margin-right: 15px;
+  margin: 0;
 }
 
 .book-image {
@@ -199,6 +206,9 @@
   font-size: 1.2em;
   color: #333;
   text-align: right;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  margin-top: 15px;
 }
 
 .cart-summary {
@@ -435,5 +445,472 @@
   .edit-book-form .save-btn,
   .edit-book-form .cancel-btn {
     width: 100%;
+  }
+}
+
+/* ========================================
+   COMPREHENSIVE RESPONSIVE DESIGN
+   ======================================== */
+
+/* Large tablets and small desktops (1024px and down) */
+@media (max-width: 1024px) {
+  .centered-container {
+    max-width: 100%;
+    padding: 15px;
+    margin-top: 80px;
+  }
+
+  .cart-header h1 {
+    font-size: 2.2em;
+  }
+
+  .cart-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .item-total {
+    text-align: center;
+    font-size: 1.3em;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+}
+
+/* Tablets (768px and down) */
+@media (max-width: 768px) {
+  .centered-container {
+    padding: 10px;
+    margin-top: 70px;
+  }
+
+  .home-link {
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .cart-header {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .cart-header h1 {
+    font-size: 1.8em;
+  }
+
+  .cart-count {
+    font-size: 1em;
+  }
+
+  .empty-cart {
+    padding: 40px 15px;
+  }
+
+  .empty-icon {
+    font-size: 3em;
+  }
+
+  .empty-cart h2 {
+    font-size: 1.4em;
+  }
+
+  .back-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  /* Mobile-first cart item layout */
+  .cart-item {
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+
+  .cart-item-mobile {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 15px;
+    align-items: start;
+  }
+
+  .item-image {
+    width: 80px;
+    height: 100px;
+  }
+
+  .item-details {
+    grid-column: 2;
+  }
+
+  .item-details h3 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+
+  .author {
+    font-size: 0.85em;
+    margin-bottom: 8px;
+  }
+
+  .price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #28a745;
+  }
+
+  .item-actions {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+  }
+
+  .quantity-controls {
+    gap: 15px;
+  }
+
+  .qty-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 8px;
+  }
+
+  .quantity {
+    min-width: 40px;
+    font-size: 16px;
+  }
+
+  .remove-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+
+  /* Cart summary responsive */
+  .cart-summary {
+    padding: 15px;
+  }
+
+  .summary-row {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+
+  .summary-row.total {
+    margin-top: 15px;
+    padding-top: 12px;
+    font-size: 1.1em;
+  }
+
+  .checkout-btn {
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 6px;
+  }
+}
+
+/* Mobile phones (480px and down) */
+@media (max-width: 480px) {
+  .centered-container {
+    padding: 8px;
+    margin-top: 60px;
+  }
+
+  .home-link {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .cart-header {
+    padding: 12px;
+    text-align: left;
+  }
+
+  .cart-header h1 {
+    font-size: 1.5em;
+  }
+
+  .cart-count {
+    font-size: 0.9em;
+  }
+
+  .empty-cart {
+    padding: 30px 12px;
+  }
+
+  .empty-icon {
+    font-size: 2.5em;
+  }
+
+  .empty-cart h2 {
+    font-size: 1.2em;
+  }
+
+  .empty-cart p {
+    font-size: 14px;
+  }
+
+  .back-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    width: 100%;
+  }
+
+  /* Extra small mobile layout */
+  .cart-item-mobile {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .item-image {
+    width: 60px;
+    height: 80px;
+    justify-self: center;
+  }
+
+  .item-details {
+    grid-column: 1;
+    text-align: center;
+  }
+
+  .item-details h3 {
+    font-size: 1em;
+    margin-bottom: 6px;
+  }
+
+  .author {
+    font-size: 0.8em;
+    margin-bottom: 6px;
+  }
+
+  .price {
+    font-size: 1em;
+  }
+
+  .item-actions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .quantity-controls {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .qty-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .quantity {
+    min-width: 35px;
+    font-size: 14px;
+  }
+
+  .remove-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    width: 100%;
+    max-width: 150px;
+  }
+
+  .item-total {
+    text-align: center;
+    font-size: 1.2em;
+    padding: 8px 0;
+  }
+
+  /* Summary adjustments */
+  .cart-summary {
+    padding: 12px;
+  }
+
+  .summary-row {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .summary-row.total {
+    font-size: 1em;
+    margin-top: 12px;
+  }
+
+  .checkout-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Extra small devices (360px and down) */
+@media (max-width: 360px) {
+  .centered-container {
+    padding: 5px;
+    margin-top: 50px;
+  }
+
+  .cart-header {
+    padding: 10px;
+  }
+
+  .cart-header h1 {
+    font-size: 1.3em;
+  }
+
+  .cart-count {
+    font-size: 0.8em;
+  }
+
+  .empty-cart {
+    padding: 25px 10px;
+  }
+
+  .empty-cart h2 {
+    font-size: 1.1em;
+  }
+
+  .cart-item {
+    padding: 12px;
+  }
+
+  .cart-item-mobile {
+    gap: 10px;
+  }
+
+  .item-image {
+    width: 50px;
+    height: 70px;
+  }
+
+  .item-details h3 {
+    font-size: 0.9em;
+  }
+
+  .author {
+    font-size: 0.75em;
+  }
+
+  .price {
+    font-size: 0.9em;
+  }
+
+  .qty-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .quantity {
+    min-width: 30px;
+    font-size: 13px;
+  }
+
+  .remove-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Touch-friendly improvements for all mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .qty-btn,
+  .remove-btn,
+  .back-btn,
+  .checkout-btn,
+  .home-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Improved spacing for finger navigation */
+  .cart-item {
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+
+  .quantity-controls {
+    gap: 20px;
+  }
+
+  .item-buttons {
+    margin-top: 10px;
+  }
+
+  /* Prevent text selection on buttons */
+  button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .book-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .centered-container {
+    margin-top: 50px;
+  }
+
+  .cart-header {
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .cart-header h1 {
+    font-size: 1.6em;
+  }
+
+  .empty-cart {
+    padding: 20px 10px;
+  }
+
+  .cart-content {
+    gap: 15px;
+  }
+}
+
+/* Print styles (in case users want to print their cart) */
+@media print {
+  .home-link,
+  .qty-btn,
+  .remove-btn,
+  .checkout-btn,
+  .back-btn,
+  app-notification,
+  app-confirmation-modal {
+    display: none !important;
+  }
+
+  .cart-item {
+    break-inside: avoid;
+    margin-bottom: 20px;
+  }
+
+  .cart-summary {
+    border: 2px solid #000;
+    padding: 15px;
   }
 }
