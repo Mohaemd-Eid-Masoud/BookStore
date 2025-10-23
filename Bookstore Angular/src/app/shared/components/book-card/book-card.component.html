@@ -1,0 +1,67 @@
+<div class="book-card">
+  <div class="book-image">
+    <i class="fas fa-book-open"></i>
+    <div class="book-overlay">
+      <span class="book-category" *ngIf="categoryName">
+        {{ categoryName }}
+      </span>
+    </div>
+  </div>
+
+  <div class="book-info">
+    <h3 class="book-title" [title]="book.name">{{ book.name }}</h3>
+
+    <div class="book-author">
+      <i class="fas fa-user"></i>
+      <span [title]="book.author">{{ book.author }}</span>
+    </div>
+
+    <div class="book-description" [title]="book.description">
+      {{ book.description | slice:0:100 }}{{ book.description.length > 100 ? '...' : '' }}
+    </div>
+
+    <!-- Book Details -->
+    <div class="book-details">
+      <div class="detail-item">
+        <i class="fas fa-dollar-sign"></i>
+        <span class="price">${{ book.value }}</span>
+      </div>
+
+      <div class="detail-item">
+        <i class="fas fa-calendar-alt"></i>
+        <span class="date">{{ book.publishDate | date:'MMM yyyy' }}</span>
+      </div>
+
+      <div class="detail-item" *ngIf="categoryName">
+        <i class="fas fa-folder"></i>
+        <span class="category">{{ categoryName }}</span>
+      </div>
+    </div>
+
+    <!-- Add to Cart Button -->
+    <div class="book-actions">
+      <button
+        class="add-to-cart-btn"
+        (click)="onAddToCart()"
+        [disabled]="isAddingToCart"
+        [class.loading]="isAddingToCart"
+        title="Add to Cart">
+        <span *ngIf="isAddingToCart" class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+        </span>
+        <span *ngIf="!isAddingToCart">
+          <i class="fas fa-shopping-cart"></i>
+        </span>
+        {{ isAddingToCart ? 'Adding...' : 'Add to Cart' }}
+      </button>
+
+      <button
+        class="quick-view-btn"
+        (click)="onQuickView()"
+        title="Quick View">
+        <i class="fas fa-eye"></i>
+        Quick View
+      </button>
+    </div>
+  </div>
+</div>

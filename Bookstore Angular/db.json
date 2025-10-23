@@ -1,0 +1,32 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "categoryId": 1,
+      "name": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "description": "A classic novel about the American Dream.",
+      "value": 15.99,
+      "publishDate": "1925-04-10T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "categoryId": 2,
+      "name": "1984",
+      "author": "George Orwell",
+      "description": "A dystopian social science fiction novel.",
+      "value": 12.99,
+      "publishDate": "1949-06-08T00:00:00Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Fiction"
+    },
+    {
+      "id": 2,
+      "name": "Science Fiction"
+    }
+  ]
+}

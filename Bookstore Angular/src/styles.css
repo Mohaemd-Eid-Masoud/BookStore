@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Add to Cart Button Loading States */
+.add-to-cart-btn {
+  position: relative;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.add-to-cart-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.add-to-cart-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.add-to-cart-btn.loading {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.loading-spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading spinner for Font Awesome icons */
+.loading-spinner i {
+  animation: fa-spin 1s infinite linear;
+}
+
+/* Success feedback animation */
+.add-to-cart-btn:not(.loading):active {
+  transform: scale(0.95);
+}

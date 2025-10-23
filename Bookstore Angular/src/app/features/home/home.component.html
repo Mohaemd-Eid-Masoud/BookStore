@@ -1,0 +1,337 @@
+  <section class="hero">
+    <h1>Welcome to Our Bookstore</h1>
+    <p>Discover amazing books and manage your collection</p>
+
+    <!-- Enhanced Search Section -->
+    <div class="search-section">
+      <div class="search-container">
+        <!-- Search Type Toggle -->
+        <div class="search-type-toggle">
+          <button
+            class="toggle-btn"
+            [class.active]="searchType === 'books'"
+            (click)="setSearchType('books')">
+            <i class="fas fa-book"></i>
+            Books
+          </button>
+          <button
+            class="toggle-btn"
+            [class.active]="searchType === 'categories'"
+            (click)="setSearchType('categories')">
+            <i class="fas fa-folder"></i>
+            Categories
+          </button>
+        </div>
+
+        <!-- Main Search Input -->
+        <div class="search-input-container">
+          <i class="fas fa-search search-icon"></i>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search {{ searchType === 'books' ? 'books by title, author, or description' : 'categories by name' }}..."
+            [(ngModel)]="searchQuery"
+            (input)="onSearchInput()"
+            (keyup.enter)="performSearch()"
+            #searchInput>
+          <button
+            class="clear-input-btn"
+            *ngIf="searchQuery"
+            (click)="clearSearch()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <!-- Category Selection for Books Search -->
+        <div class="search-category-select" *ngIf="searchType === 'books'">
+          <select class="filter-select" [(ngModel)]="selectedSearchCategory" (change)="onSearchCategoryChange()">
+            <option value="">Search in All Categories</option>
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+          </select>
+          <div class="category-select-info" *ngIf="selectedSearchCategory">
+            <i class="fas fa-info-circle"></i>
+            <span>Searching only in <strong>{{ getCategoryName(+selectedSearchCategory) }}</strong> category</span>
+          </div>
+        </div>
+
+        <!-- Advanced Filters (for books) -->
+        <div class="advanced-filters" *ngIf="searchType === 'books' && showAdvancedFilters">
+          <div class="filter-row">
+            <select class="filter-select" [(ngModel)]="selectedCategory" (change)="performSearch()">
+              <option value="">All Categories</option>
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+
+            <select class="filter-select" [(ngModel)]="priceRange" (change)="performSearch()">
+              <option value="">Any Price</option>
+              <option value="0-20">$0 - $20</option>
+              <option value="20-50">$20 - $50</option>
+              <option value="50-100">$50 - $100</option>
+              <option value="100+">$100+</option>
+            </select>
+
+            <select class="filter-select" [(ngModel)]="sortBy" (change)="performSearch()">
+              <option value="name">Sort by Name</option>
+              <option value="author">Sort by Author</option>
+              <option value="price">Sort by Price</option>
+              <option value="publishDate">Sort by Date</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Search Actions -->
+        <div class="search-actions">
+          <button
+            class="search-btn primary"
+            [disabled]="isSearching || !searchQuery.trim()"
+            (click)="performSearch()">
+            <i class="fas fa-search"></i>
+            <span *ngIf="isSearching">Searching...</span>
+            <span *ngIf="!isSearching">Search {{ searchType === 'books' ? 'Books' : 'Categories' }}</span>
+          </button>
+
+          <button
+            class="filter-toggle-btn"
+            *ngIf="searchType === 'books'"
+            (click)="toggleAdvancedFilters()">
+            <i class="fas" [class]="showAdvancedFilters ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            {{ showAdvancedFilters ? 'Hide Filters' : 'Show Filters' }}
+          </button>
+        </div>
+
+        <!-- Search Suggestions -->
+        <div class="search-suggestions" *ngIf="showSuggestions && suggestions.length > 0">
+          <div class="suggestion-item" *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+            <i class="fas fa-search"></i>
+            {{ suggestion }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-buttons">
+      <a routerLink="/shop" class="hero-btn">Start Shopping</a>
+      <a routerLink="/admin" class="hero-btn">Manage Books</a>
+    </div>
+  </section>
+
+  <!-- Category Browsing Section -->
+  <section class="category-browsing" *ngIf="categories.length > 0">
+    <div class="category-browsing-container">
+      <div class="category-browsing-header">
+        <h2 class="category-browsing-title">
+          <i class="fas fa-th-large"></i>
+          Browse by Category
+        </h2>
+        <p class="category-browsing-subtitle">Discover books by exploring our carefully curated categories</p>
+      </div>
+
+      <div class="categories-grid">
+        <div class="category-card" *ngFor="let category of categories; let i = index"
+             (click)="onCategoryClick(category)"
+             [style.animation-delay.ms]="i * 100">
+          <div class="category-card-inner">
+            <div class="category-icon-wrapper">
+              <div class="category-icon">
+                <i class="fas" [class]="getCategoryIcon(category.name)"></i>
+              </div>
+              <div class="category-glow"></div>
+            </div>
+            <div class="category-content">
+              <h3 class="category-name">{{ category.name }}</h3>
+              <p class="category-description">Explore our {{ category.name.toLowerCase() }} collection</p>
+              <div class="category-arrow">
+                <i class="fas fa-arrow-right"></i>
+              </div>
+            </div>
+            <div class="category-hover-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Books Display -->
+  <section class="category-books" *ngIf="showCategoryBooks">
+    <div class="category-books-container">
+      <div class="category-header">
+        <div class="category-header-content">
+          <h2 class="category-title">
+            <div class="category-title-icon">
+              <i class="fas fa-folder"></i>
+            </div>
+            <span class="category-title-text">Books in {{ getCategoryName(+selectedBrowseCategory) }}</span>
+          </h2>
+          <button class="back-btn" (click)="showCategoryBooks = false">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Browse</span>
+          </button>
+        </div>
+
+        <div class="category-stats" *ngIf="categoryBooks.length > 0">
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="stat-content">
+              <span class="stat-number">{{ getTotalBooksInCategory() }}</span>
+              <span class="stat-label">Books</span>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-content">
+              <span class="stat-number">Daily</span>
+              <span class="stat-label">Updates</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-books-grid" *ngIf="categoryBooks.length > 0">
+        <div class="category-section" *ngFor="let categoryBook of categoryBooks">
+          <div class="category-section-header" *ngIf="categoryBook.books.length > 0">
+            <div class="category-info">
+              <h3 class="category-section-title">
+                <div class="category-section-icon">
+                  <i class="fas" [class]="getCategoryIcon(categoryBook.category.name)"></i>
+                </div>
+                <span>{{ categoryBook.category.name }}</span>
+              </h3>
+              <p class="category-subtitle">Collection of {{ categoryBook.books.length }} books in this category</p>
+            </div>
+            <div class="book-count-badge">
+              <span class="book-count">{{ categoryBook.books.length }}</span>
+              <span class="book-label">books</span>
+            </div>
+          </div>
+
+          <div class="books-grid" *ngIf="!categoryBook.isLoading && categoryBook.books.length > 0; else loadingTemplate">
+            <app-book-card
+              *ngFor="let book of categoryBook.books; trackBy: trackByBookId"
+              [book]="book"
+              [categoryName]="categoryBook.category.name"
+              [isAddingToCart]="addingToCartBookId === book.id"
+              (addToCart)="onBookCardAddToCart(book)"
+              (quickView)="onQuickView(book)">
+            </app-book-card>
+          </div>
+
+          <ng-template #loadingTemplate>
+            <div class="loading-books" *ngIf="categoryBook.isLoading">
+              <div class="loading-content">
+                <div class="loading-spinner">
+                  <div class="spinner-ring"></div>
+                  <div class="spinner-ring"></div>
+                  <div class="spinner-ring"></div>
+                </div>
+                <div class="loading-text">
+                  <h4>Loading books in {{ categoryBook.category.name }}...</h4>
+                  <p>Please wait while we fetch the latest books</p>
+                </div>
+              </div>
+            </div>
+            <div class="no-books" *ngIf="!categoryBook.isLoading && categoryBook.books.length === 0">
+              <div class="no-books-content">
+                <div class="no-books-icon">
+                  <i class="fas fa-book-open"></i>
+                </div>
+                <div class="no-books-text">
+                  <h4>No books found</h4>
+                  <p>No books are available in <strong>{{ categoryBook.category.name }}</strong> category yet.</p>
+                  <p class="no-books-suggestion">
+                    <i class="fas fa-lightbulb"></i>
+                    Check back later or browse other categories!
+                  </p>
+                </div>
+                <div class="no-books-actions">
+                  <button class="browse-other-btn" (click)="showCategoryBooks = false">
+                    <i class="fas fa-arrow-left"></i>
+                    Browse Other Categories
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced Search Results Section -->
+  <section class="search-results" *ngIf="showBooksResults || showCategoriesResults">
+
+    <!-- Books Results -->
+    <div class="results-section" *ngIf="showBooksResults">
+      <div class="results-header">
+        <h2>
+          <i class="fas fa-book"></i>
+          Book Results
+          <span class="results-count">({{ filteredBooks.length }})</span>
+        </h2>
+        <div class="search-summary" *ngIf="searchQuery">
+          Showing results for "<strong>{{ searchQuery }}</strong>"
+        </div>
+      </div>
+
+      <div class="results-grid" *ngIf="filteredBooks.length > 0; else noBooksFound">
+        <app-book-card
+          *ngFor="let book of filteredBooks"
+          [book]="book"
+          [categoryName]="getCategoryName(book.categoryId)"
+          [isAddingToCart]="addingToCartBookId === book.id"
+          (addToCart)="onBookCardAddToCart(book)"
+          (quickView)="onQuickView(book)">
+        </app-book-card>
+      </div>
+      <ng-template #noBooksFound>
+        <div class="no-results">
+          <i class="fas fa-search"></i>
+          <h3>No books found</h3>
+          <p>No books match your search criteria: "<strong>{{ searchQuery }}</strong>"</p>
+          <button class="retry-btn" (click)="clearSearch()">Try a different search</button>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Categories Results -->
+    <div class="results-section" *ngIf="showCategoriesResults">
+      <div class="results-header">
+        <h2>
+          <i class="fas fa-folder"></i>
+          Category Results
+          <span class="results-count">({{ filteredCategories.length }})</span>
+        </h2>
+        <div class="search-summary" *ngIf="searchQuery">
+          Showing results for "<strong>{{ searchQuery }}</strong>"
+        </div>
+      </div>
+
+      <div class="categories-grid" *ngIf="filteredCategories.length > 0; else noCategoriesFound">
+        <div class="category-card" *ngFor="let category of filteredCategories" (click)="onCategoryClick(category)">
+          <div class="category-icon">
+            <i class="fas fa-folder-open"></i>
+          </div>
+          <h3>{{ category.name }}</h3>
+          <p class="category-id">ID: {{ category.id }}</p>
+        </div>
+      </div>
+      <ng-template #noCategoriesFound>
+        <div class="no-results">
+          <i class="fas fa-folder"></i>
+          <h3>No categories found</h3>
+          <p>No categories match your search: "<strong>{{ searchQuery }}</strong>"</p>
+          <button class="retry-btn" (click)="clearSearch()">Try a different search</button>
+        </div>
+      </ng-template>
+    </div>
+
+  </section>
+
+<!-- Global Notifications -->
+<app-notification></app-notification>
+
+<!-- Global Confirmation Modal -->
+<app-confirmation-modal></app-confirmation-modal>

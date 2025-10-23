@@ -1,0 +1,35 @@
+<nav class="navbar">
+  <div class="navbar-brand">📚 Bookstore</div>
+  <ul class="navbar-nav">
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/shop">🛒 Shop</a></li>
+    <li><a routerLink="/admin">⚙️ Admin</a></li>
+    <li class="cart-link">
+      <a routerLink="/cart">
+        🛒 Cart
+        <span class="cart-counter" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Global Notifications -->
+<app-notification></app-notification>
+
+<!-- Global Confirmation Modal -->
+<app-confirmation-modal></app-confirmation-modal>
+
+<!-- Router outlet for home, shop, admin, cart and other routed components -->
+<main class="main-content">
+<router-outlet></router-outlet>
+</main>
+<footer class="footer">
+  <div class="footer-links">
+    <a routerLink="/about">About Us</a>
+    <a routerLink="/contact">Contact</a>
+    <a routerLink="/privacy">Privacy Policy</a>
+    <a routerLink="/terms">Terms of Service</a>
+    <a routerLink="/faq">FAQ</a>
+  </div>
+  <p>&copy; 2025 Bookstore. All rights reserved.</p>
+</footer>

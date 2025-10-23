@@ -1,0 +1,21 @@
+<div class="notifications-container">
+  <div
+    *ngFor="let notification of notifications"
+    class="notification"
+    [ngClass]="'notification-' + notification.type"
+    [@slideInOut]>
+    <div class="notification-icon">
+      <i [class]="'fas ' + getIconClass(notification.type)"></i>
+    </div>
+    <div class="notification-content">
+      <div class="notification-title">{{ notification.title }}</div>
+      <div class="notification-message">{{ notification.message }}</div>
+    </div>
+    <button
+      class="notification-close"
+      (click)="removeNotification(notification.id)"
+      aria-label="Close notification">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+{
+  "name": "Bookstore - Online Book Store",
+  "short_name": "Bookstore",
+  "description": "Your ultimate online bookstore offering a wide selection of books, fast shipping, and excellent customer service.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["books", "education", "shopping"],
+  "lang": "en-US",
+  "scope": "/",
+  "prefer_related_applications": false
+}

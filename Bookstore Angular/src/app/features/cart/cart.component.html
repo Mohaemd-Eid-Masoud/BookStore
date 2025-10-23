@@ -1,0 +1,66 @@
+<div class="centered-container">
+  <a routerLink="/" class="home-link">🏠 Home</a>
+  <div class="cart-container">
+    <div class="cart-header">
+      <h1>Shopping Cart</h1>
+      <p class="cart-count">{{ cartItems.length }} {{ cartItems.length === 1 ? 'item' : 'items' }} in your cart</p>
+    </div>
+
+    <div *ngIf="cartItems.length === 0" class="empty-cart">
+      <div class="empty-icon">🛒</div>
+      <h2>Your cart is empty</h2>
+      <p>Add some books to get started!</p>
+      <button (click)="goBack()" class="back-btn">Continue Shopping</button>
+    </div>
+
+    <div *ngIf="cartItems.length > 0" class="cart-content">
+      <ul class="cart-list">
+        <li *ngFor="let item of cartItems; let i = index" class="cart-item">
+          <div class="item-image">
+            <img src="/assets/book-placeholder.png" alt="{{ item.book.name }}" class="book-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="book-fallback" style="display: none;">📖</div>
+          </div>
+          <div class="item-details">
+            <h3>{{ item.book.name }}</h3>
+            <p class="author">{{ item.book.author }}</p>
+            <p class="price">${{ item.book.value }}</p>
+          </div>
+          <div class="item-actions">
+            <div class="quantity-controls">
+              <button (click)="updateQuantity(i, item.quantity - 1)" [disabled]="item.quantity <= 1" class="qty-btn">-</button>
+              <span class="quantity">{{ item.quantity }}</span>
+              <button (click)="updateQuantity(i, item.quantity + 1)" class="qty-btn">+</button>
+            </div>
+            <div class="item-buttons">
+              <button (click)="removeFromCart(i)" class="remove-btn">Remove</button>
+            </div>
+          </div>
+          <div class="item-total">
+            ${{ item.book.value * item.quantity }}
+          </div>
+        </li>
+      </ul>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>${{ getSubtotal() }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax</span>
+          <span>${{ getTax() }}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>${{ getTotal() }}</span>
+        </div>
+        <button (click)="buyCart()" class="checkout-btn">Proceed to Checkout</button>
+      </div>
+  </div>
+</div>
+
+<!-- Global Notifications -->
+<app-notification></app-notification>
+
+<!-- Global Confirmation Modal -->
+<app-confirmation-modal></app-confirmation-modal>

@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://bookstore.com/sitemap.xml
+
+# Disallow common development and admin paths
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*?*
+
+# Allow important pages
+Allow: /
+Allow: /books
+Allow: /categories
+Allow: /about
+Allow: /contact
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1

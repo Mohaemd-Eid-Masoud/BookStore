@@ -1,0 +1,198 @@
+/* Centering and Home Link Styles */
+.centered-container {
+  max-width: 1200px;
+  margin: 100px auto 0; /* Added margin-top for fixed navbar */
+  padding: 20px;
+  text-align: center;
+}
+
+.home-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.home-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+
+/* Modern UI Styles for ShopComponent */
+
+:root {
+  --primary-color: #007bff;
+  --primary-dark: #0056b3;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+.section {
+  padding: 30px;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid #e9ecef;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.section:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.book-list, .category-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.book-item, .category-item {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.book-item:hover, .category-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.book-item::before, .category-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+}
+
+.no-data {
+  color: var(--secondary-color);
+  font-style: italic;
+  text-align: center;
+  padding: 40px;
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  border: 2px dashed #dee2e6;
+}
+
+.section p {
+  color: var(--secondary-color);
+  line-height: 1.6;
+}
+
+.author {
+  color: var(--info-color);
+}
+
+.price {
+  color: var(--success-color);
+  font-weight: bold;
+}
+
+.load-btn {
+  background: linear-gradient(135deg, var(--info-color), #138496);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.add-to-cart-btn {
+  background: linear-gradient(135deg, #fd7e14, #e55a00);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.filter-btn {
+  background: linear-gradient(135deg, #6f42c1, #59359a);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+button {
+  padding: 12px 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+button[title] {
+  position: relative;
+}
+
+button[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--dark-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+/* Additional modern touches */
+.book-list li, .category-list li {
+  position: relative;
+}
+
+.book-item .card-footer, .category-item .card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #dee2e6;
+}
+
+@media (max-width: 768px) {
+  .book-list, .category-list {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

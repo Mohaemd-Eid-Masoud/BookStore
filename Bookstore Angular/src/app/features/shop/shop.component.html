@@ -1,0 +1,53 @@
+<div class="centered-container">
+  <a routerLink="/" class="home-link">🏠 Home</a>
+  <section id="books" class="section">
+    <h2>📚 Shop Books</h2>
+    <p>Browse our collection and add your favorite books to the cart.</p>
+    <div *ngIf="books.length === 0" class="no-data">No books available. Click the button to load!</div>
+    <ul class="book-list">
+      <li *ngFor="let book of books" class="book-item">
+        <app-card [title]="book.name" [showFooter]="true">
+          <p><strong>Author:</strong> <span class="author">{{ book.author }}</span></p>
+          <p><strong>Description:</strong> {{ book.description }}</p>
+          <p><strong>Price:</strong> <span class="price">${{ book.value }}</span></p>
+          <p><strong>Published:</strong> {{ book.publishDate }}</p>
+          <div footer>
+            <button
+              (click)="addToCart(book)"
+              class="add-to-cart-btn"
+              [disabled]="addingToCartBookId === book.id"
+              [class.loading]="addingToCartBookId === book.id"
+              title="Add to cart">
+              <span *ngIf="addingToCartBookId === book.id" class="loading-spinner">⟳</span>
+              <span *ngIf="addingToCartBookId !== book.id">🛒</span>
+              {{ addingToCartBookId === book.id ? 'Adding...' : 'Add to Cart' }}
+            </button>
+          </div>
+        </app-card>
+      </li>
+    </ul>
+    <button (click)="loadBooks()" class="load-btn">📚 Load Books</button>
+  </section>
+
+  <section id="categories" class="section">
+    <h2>🏷️ Categories</h2>
+    <div *ngIf="categories.length === 0" class="no-data">No categories available.</div>
+    <ul class="category-list">
+      <li *ngFor="let category of categories" class="category-item">
+        <span>{{ category.name }}</span>
+        <button (click)="filterBooksByCategory(category.id!)" class="filter-btn" title="View books in this category">👁️ View Books</button>
+      </li>
+    </ul>
+  </section>
+
+  <section id="cart" class="section">
+    <h2>🛒 Your Shopping</h2>
+    <p>Ready to checkout? <a routerLink="/cart">Go to Cart</a></p>
+  </section>
+</div>
+
+<!-- Global Notifications -->
+<app-notification></app-notification>
+
+<!-- Global Confirmation Modal -->
+<app-confirmation-modal></app-confirmation-modal>
